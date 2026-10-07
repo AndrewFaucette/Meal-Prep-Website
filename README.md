@@ -14,9 +14,11 @@ The software is hosted on a website...
 
 ## Software Features
 
-* [ ] First feature here
-* [ ] Second feature here
-* [ ] Keep going ....
+*  Set a maximum grocery budget for the week
+* Plan breakfast, lunch, and dinner for each day
+* Each user has their own plans, recipes, and budgets
+* Users create and save their own recipes
+* Show planned cost, actual spending, and remaining budget
 
 ## Team Communication
 Text
@@ -25,12 +27,12 @@ Text
 
 |Responsibility                      |Team Member(s)              |
 |------------------------------------|----------------------------|
-|Conducting Meetings                 |                            |
-|Maintaining Team Assignment List    |                            |
-|Ensuring GitHub is Working          |                            |
-|Maintaining Documentation           |                            |
-|Create & Display Presentations      |                            |
-|Submit Team Assignments             |                            |
+|Conducting Meetings                 |          Andrew Faucette                  |
+|Maintaining Team Assignment List    |          Paige Sullivan                  |
+|Ensuring GitHub is Working          |          Andrew Faucette                  |
+|Maintaining Documentation           |          Cody Winter                  |
+|Create & Display Presentations      |          Garyeong                  |
+|Submit Team Assignments             |          Cody Winter                  |
 
 ## Reflections
 

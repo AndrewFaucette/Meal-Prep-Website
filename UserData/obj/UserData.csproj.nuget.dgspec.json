@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\Meal-Prep-Website.csproj": {}
+    "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\UserData\\UserData.csproj": {}
   },
   "projects": {
-    "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\Meal-Prep-Website.csproj": {
+    "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\UserData\\UserData.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\Meal-Prep-Website.csproj",
-        "projectName": "Meal-Prep-Website",
-        "projectPath": "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\Meal-Prep-Website.csproj",
+        "projectUniqueName": "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\UserData\\UserData.csproj",
+        "projectName": "UserData",
+        "projectPath": "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\UserData\\UserData.csproj",
         "packagesPath": "C:\\Users\\herot\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\obj\\",
+        "outputPath": "C:\\Users\\herot\\Documents\\Code\\CSE310\\Meal-Prep-Website\\UserData\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

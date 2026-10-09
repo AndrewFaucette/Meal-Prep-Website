@@ -1,0 +1,17 @@
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\bin\Debug\net10.0\BudgetPlanner.exe
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\bin\Debug\net10.0\BudgetPlanner.deps.json
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\bin\Debug\net10.0\BudgetPlanner.runtimeconfig.json
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\bin\Debug\net10.0\BudgetPlanner.dll
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\bin\Debug\net10.0\BudgetPlanner.pdb
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\bin\Debug\net10.0\BudgetPlanner.xml
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.AssemblyInfoInputs.cache
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.AssemblyInfo.cs
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.csproj.CoreCompileInputs.cache
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.sourcelink.json
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.dll
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\refint\BudgetPlanner.dll
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.xml
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.pdb
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\BudgetPlanner.genruntimeconfig.cache
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\budgetplanner\obj\Debug\net10.0\ref\BudgetPlanner.dll

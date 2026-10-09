@@ -1,0 +1,5 @@
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\obj\Debug\net8.0\Meal-Prep-Website.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\obj\Debug\net8.0\Meal-Prep-Website.AssemblyInfoInputs.cache
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\obj\Debug\net8.0\Meal-Prep-Website.AssemblyInfo.cs
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\obj\Debug\net8.0\Meal-Prep-Website.csproj.CoreCompileInputs.cache
+C:\Users\herot\Documents\Code\CSE310\Meal-Prep-Website\obj\Debug\net8.0\Meal-Prep-Website.sourcelink.json

@@ -1,0 +1,5 @@
+C:\Users\codyw_mpjn5zv\OneDrive\Desktop\appliedprogramming\Meal-Prep-Website\obj\Debug\net10.0\Meal-Prep-Website.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\codyw_mpjn5zv\OneDrive\Desktop\appliedprogramming\Meal-Prep-Website\obj\Debug\net10.0\Meal-Prep-Website.AssemblyInfoInputs.cache
+C:\Users\codyw_mpjn5zv\OneDrive\Desktop\appliedprogramming\Meal-Prep-Website\obj\Debug\net10.0\Meal-Prep-Website.AssemblyInfo.cs
+C:\Users\codyw_mpjn5zv\OneDrive\Desktop\appliedprogramming\Meal-Prep-Website\obj\Debug\net10.0\Meal-Prep-Website.csproj.CoreCompileInputs.cache
+C:\Users\codyw_mpjn5zv\OneDrive\Desktop\appliedprogramming\Meal-Prep-Website\obj\Debug\net10.0\Meal-Prep-Website.sourcelink.json

@@ -19,6 +19,7 @@ public class Day
     private string name = "";
     private Budget planned = new Budget(0);
     private Budget spent = new Budget(0);
+    private Meal plannedMeal = new Meal(0, "", "");
 
     /// <summary>Resolves a case-insensitive day alias; unknown names leave the name empty.</summary>
     public Day(string name)
@@ -44,6 +45,15 @@ public class Day
 
     /// <summary>Replaces the planned budget with a new budget from the supplied amount.</summary>
     public void SetBudget(double budget) => planned = new Budget(budget);
+
+    /// <summary>Sets the planned meal for the day.</summary>
+    public void SetMeal(Meal meal) => plannedMeal = meal;
+
+    /// <summary>Replaces the planned meal with a new meal from the supplied amount.</summary>
+    public void SetMeal(int meal, string ingredients, string nutritionalInformation) => plannedMeal = new Meal(meal, ingredients, nutritionalInformation);
+
+    /// <summary>Replaces the planned meal with a new meal from the supplied amount.</summary>
+    public void SetMeal(double meal, string ingredients, string nutritionalInformation) => plannedMeal = new Meal(meal, ingredients, nutritionalInformation);
 
     /// <summary>Adds to the planned budget.</summary>
     public void AddBudget(Budget amount) => planned.Add(amount);
@@ -72,6 +82,18 @@ public class Day
     /// <summary>Adds to recorded spending. The operand is floored to two decimal places.</summary>
     public void AddSpent(double amount) => spent.Add(amount);
 
+    /// <summary>Sets the cost of the planned meal.</summary>
+    public void SetCost(int cost) => plannedMeal.SetCost(cost);
+
+    /// <summary>Sets the cost of the planned meal.</summary>
+    public void SetCost(double cost) => plannedMeal.SetCost(cost);
+
+    /// <summary>Sets the ingredients of the planned meal.</summary>
+    public void SetIngredients(string ingredients) => plannedMeal.SetIngredients(ingredients);
+
+    /// <summary>Sets the nutritional information of the planned meal.</summary>
+    public void SetNutritionalInformation(string nutritionalInformation) => plannedMeal.SetNutritionalInformation(nutritionalInformation);
+
     /// <summary>Returns the actual mutable planned budget.</summary>
     public Budget GetPlannedBudget() => planned;
 
@@ -80,4 +102,7 @@ public class Day
 
     /// <summary>Returns the canonical day name or the empty string for an unknown alias.</summary>
     public string GetName() => name;
+
+    /// <summary>Returns the planned meal.</summary>
+    public Meal GetPlannedMeal() => plannedMeal;
 }

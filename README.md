@@ -10,7 +10,9 @@ This is a Meal Plan Budget Tracker that can allow students to build a budget and
 
 ## Architecture
 
-The software is hosted on a website...
+Frontend: HTML, CSS, JavaScript, TypeScript
+Backend: C#
+Database: MySQL
 
 ## Software Features
 
@@ -27,12 +29,12 @@ Text
 
 |Responsibility                      |Team Member(s)              |
 |------------------------------------|----------------------------|
-|Conducting Meetings                 |          Andrew Faucette                  |
-|Maintaining Team Assignment List    |          Paige Sullivan                  |
-|Ensuring GitHub is Working          |          Andrew Faucette                  |
-|Maintaining Documentation           |          Cody Winter                  |
-|Create & Display Presentations      |          Garyeong                  |
-|Submit Team Assignments             |          Cody Winter                  |
+|Conducting Meetings                 |     Andrew Faucette        |
+|Maintaining Team Assignment List    |     Paige Sullivan         |
+|Ensuring GitHub is Working          |     Andrew Faucette        |
+|Maintaining Documentation           |     Cody Winter            |
+|Create & Display Presentations      |     Garyeong               |
+|Submit Team Assignments             |     Cody Winter            |
 
 ## Reflections
 

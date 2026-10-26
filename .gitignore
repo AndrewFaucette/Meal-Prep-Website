@@ -2,6 +2,8 @@
 # Build output
 bin/
 obj/
+**/bin/
+**/obj/
 
 # Visual Studio
 .vs/

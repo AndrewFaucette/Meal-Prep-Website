@@ -12,7 +12,7 @@ public class Day
             ["Wednesday"] = new[] { "w", "W", "Wed", "Wednesday" },
             ["Thursday"] = new[] { "th", "TH", "Thu", "Thursday" },
             ["Friday"] = new[] { "f", "F", "Fri", "Friday" },
-            ["Saturday"] = new[] { "st", "st", "Sat", "Saturday" },
+            ["Saturday"] = new[] { "st", "ST", "Sat", "Saturday" },
             ["Sunday"] = new[] { "s", "S", "Sun", "Sunday" }
         };
 

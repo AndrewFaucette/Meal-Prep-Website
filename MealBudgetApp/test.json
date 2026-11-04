@@ -1,0 +1,62 @@
+[
+  {
+    "userId": 1,
+    "userName": "alice_johnson",
+    "email": "alice.johnson@example.com",
+    "password": "V7mQ2xL9pR4k"
+  },
+  {
+    "userId": 2,
+    "userName": "brian_smith",
+    "email": "brian.smith@example.com",
+    "password": "N8zT5wK3cY6h"
+  },
+  {
+    "userId": 3,
+    "userName": "carla_williams",
+    "email": "carla.williams@example.com",
+    "password": "Q4rM9vB2sX7n"
+  },
+  {
+    "userId": 4,
+    "userName": "david_brown",
+    "email": "david.brown@example.com",
+    "password": "H6pL3dW8jK2q"
+  },
+  {
+    "userId": 5,
+    "userName": "emma_davis",
+    "email": "emma.davis@example.com",
+    "password": "Z9cR5mF1tV8x"
+  },
+  {
+    "userId": 6,
+    "userName": "frank_miller",
+    "email": "frank.miller@example.com",
+    "password": "B3nY7qS4kP9d"
+  },
+  {
+    "userId": 7,
+    "userName": "grace_wilson",
+    "email": "grace.wilson@example.com",
+    "password": "T2xJ8vC5mN6r"
+  },
+  {
+    "userId": 8,
+    "userName": "henry_moore",
+    "email": "henry.moore@example.com",
+    "password": "P5wK9hD3sL7z"
+  },
+  {
+    "userId": 9,
+    "userName": "isabella_taylor",
+    "email": "isabella.taylor@example.com",
+    "password": "M8qF2rX6vB4t"
+  },
+  {
+    "userId": 10,
+    "userName": "jack_anderson",
+    "email": "jack.anderson@example.com",
+    "password": "Y4sN7cL1pR8m"
+  }
+]

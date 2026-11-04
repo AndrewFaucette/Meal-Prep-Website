@@ -42,7 +42,6 @@ public class Meal
     /// <summary>Returns the stored ingredients.</summary>
     public String GetIngredients() => Ingredients;
 
-
     /// <summary>Returns the stored nutritional information.</summary>
     public String GetNutritionalInformation() => NutritionalInformation;
 

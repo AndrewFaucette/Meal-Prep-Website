@@ -12,11 +12,11 @@ This is a Meal Plan Budget Tracker that can allow students to build a budget and
 
 Frontend: HTML, CSS, JavaScript, TypeScript
 Backend: C#
-Database: MySQL
+Database: MongoDB
 
 ## Software Features
 
-*  Set a maximum grocery budget for the week
+* Set a maximum grocery budget for the week
 * Plan breakfast, lunch, and dinner for each day
 * Each user has their own plans, recipes, and budgets
 * Users create and save their own recipes

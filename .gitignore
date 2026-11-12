@@ -16,6 +16,9 @@ obj/
 # NuGet packages
 *.nupkg
 
+# ASP.NET Core Data Protection keys
+backend/MealPrep.Api/keys/
+
 # OS files
 .DS_Store
 Thumbs.db

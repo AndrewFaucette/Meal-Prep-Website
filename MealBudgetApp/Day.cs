@@ -19,7 +19,7 @@ public class Day
     private string name = "";
     private Budget planned = new Budget(0);
     private Budget spent = new Budget(0);
-    private Meal plannedMeal = new Meal(0, "", "");
+    private Meal plannedMeal = new Meal("", 0, "", "");
 
     /// <summary>Resolves a case-insensitive day alias; unknown names leave the name empty.</summary>
     public Day(string name)
@@ -50,10 +50,10 @@ public class Day
     public void SetMeal(Meal meal) => plannedMeal = meal;
 
     /// <summary>Replaces the planned meal with a new meal from the supplied amount.</summary>
-    public void SetMeal(int meal, string ingredients, string nutritionalInformation) => plannedMeal = new Meal(meal, ingredients, nutritionalInformation);
+    public void SetMeal(string name, int meal, string ingredients, string nutritionalInformation) => plannedMeal = new Meal(name, meal, ingredients, nutritionalInformation);
 
     /// <summary>Replaces the planned meal with a new meal from the supplied amount.</summary>
-    public void SetMeal(double meal, string ingredients, string nutritionalInformation) => plannedMeal = new Meal(meal, ingredients, nutritionalInformation);
+    public void SetMeal(string name, double meal, string ingredients, string nutritionalInformation) => plannedMeal = new Meal(name, meal, ingredients, nutritionalInformation);
 
     /// <summary>Adds to the planned budget.</summary>
     public void AddBudget(Budget amount) => planned.Add(amount);
@@ -81,6 +81,15 @@ public class Day
 
     /// <summary>Adds to recorded spending. The operand is floored to two decimal places.</summary>
     public void AddSpent(double amount) => spent.Add(amount);
+
+    /// <summary>Replaces the recorded spending with a new budget.</summary>
+    public void SetSpent(Budget amount) => spent = amount;
+
+    /// <summary>Replaces the recorded spending with a new budget.</summary>
+    public void SetSpent(int amount) => spent = new Budget(amount);
+
+    /// <summary>Replaces the recorded spending with a new budget.</summary>
+    public void SetSpent(double amount) => spent = new Budget(amount);
 
     /// <summary>Sets the cost of the planned meal.</summary>
     public void SetCost(int cost) => plannedMeal.SetCost(cost);

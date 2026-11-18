@@ -166,10 +166,9 @@ public class Week
 
             day.SetBudget(dayData.Planned.Amount);
             day.SetSpent(dayData.Spent.Amount);
-            day.SetMeal(dayData.PlannedMeal.Cost,
+            day.SetMeal(dayData.PlannedMeal.Name, dayData.PlannedMeal.Cost,
                 dayData.PlannedMeal.Ingredients,
                 dayData.PlannedMeal.NutritionalInformation);
-            day.GetPlannedMeal().SetName(dayData.PlannedMeal.Name);
         }
 
         name = weekData.Name;

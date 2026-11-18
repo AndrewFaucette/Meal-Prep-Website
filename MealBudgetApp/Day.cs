@@ -82,6 +82,15 @@ public class Day
     /// <summary>Adds to recorded spending. The operand is floored to two decimal places.</summary>
     public void AddSpent(double amount) => spent.Add(amount);
 
+    /// <summary>Replaces the recorded spending with a new budget.</summary>
+    public void SetSpent(Budget amount) => spent = amount;
+
+    /// <summary>Replaces the recorded spending with a new budget.</summary>
+    public void SetSpent(int amount) => spent = new Budget(amount);
+
+    /// <summary>Replaces the recorded spending with a new budget.</summary>
+    public void SetSpent(double amount) => spent = new Budget(amount);
+
     /// <summary>Sets the cost of the planned meal.</summary>
     public void SetCost(int cost) => plannedMeal.SetCost(cost);
 

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 /// <summary>Holds seven days, cached totals, and interactive weekly budgeting operations.</summary>
 public class Week
@@ -130,6 +132,98 @@ public class Week
 
     /// <summary>Returns the week name.</summary>
     public string GetName() => name;
+
+    /// <summary>Reads a week and its seven days from a JSON file.</summary>
+    /// <remarks>Each day is matched by its canonical name, so the JSON day order does not matter.</remarks>
+    public void ReadData(string filePath)
+    {
+        string json = File.ReadAllText(filePath);
+        WeekData? weekData = JsonSerializer.Deserialize<WeekData>(json);
+
+        if (weekData is null || string.IsNullOrWhiteSpace(weekData.Name))
+            throw new InvalidDataException("The JSON file does not contain a valid week.");
+
+        if (weekData.Days is null || weekData.Days.Count != 7)
+            throw new InvalidDataException("A week must contain exactly seven days.");
+
+        Dictionary<string, DayData> dayDataByName = new Dictionary<string, DayData>(StringComparer.OrdinalIgnoreCase);
+        foreach (DayData? dayData in weekData.Days)
+        {
+            if (dayData is null || string.IsNullOrWhiteSpace(dayData.Name))
+                throw new InvalidDataException("Every week day must have a name.");
+
+            if (!dayDataByName.TryAdd(dayData.Name, dayData))
+                throw new InvalidDataException($"The week contains a duplicate day: {dayData.Name}.");
+        }
+
+        foreach (Day day in days)
+        {
+            if (!dayDataByName.TryGetValue(day.GetName(), out DayData? dayData))
+                throw new InvalidDataException($"The week is missing {day.GetName()}.");
+
+            if (dayData.Planned is null || dayData.Spent is null || dayData.PlannedMeal is null)
+                throw new InvalidDataException($"The data for {day.GetName()} is incomplete.");
+
+            day.SetBudget(dayData.Planned.Amount);
+            day.SetSpent(dayData.Spent.Amount);
+            day.SetMeal(dayData.PlannedMeal.Cost,
+                dayData.PlannedMeal.Ingredients,
+                dayData.PlannedMeal.NutritionalInformation);
+            day.GetPlannedMeal().SetName(dayData.PlannedMeal.Name);
+        }
+
+        name = weekData.Name;
+        planComplete = weekData.PlanComplete;
+        SetTotalBudget();
+    }
+
+    private sealed class WeekData
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = "";
+
+        [JsonPropertyName("planComplete")]
+        public bool PlanComplete { get; set; }
+
+        [JsonPropertyName("days")]
+        public List<DayData>? Days { get; set; }
+    }
+
+    private sealed class DayData
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = "";
+
+        [JsonPropertyName("planned")]
+        public BudgetData? Planned { get; set; }
+
+        [JsonPropertyName("spent")]
+        public BudgetData? Spent { get; set; }
+
+        [JsonPropertyName("plannedMeal")]
+        public MealData? PlannedMeal { get; set; }
+    }
+
+    private sealed class BudgetData
+    {
+        [JsonPropertyName("amount")]
+        public double Amount { get; set; }
+    }
+
+    private sealed class MealData
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = "";
+
+        [JsonPropertyName("cost")]
+        public double Cost { get; set; }
+
+        [JsonPropertyName("ingredients")]
+        public string Ingredients { get; set; } = "";
+
+        [JsonPropertyName("nutritionalInformation")]
+        public string NutritionalInformation { get; set; } = "";
+    }
 
     /// <summary>Returns completion text using the original formatted-zero test.</summary>
     /// <remarks>Value comparison replaces Java reference comparison, but zero formats as 0.0, not 0.00.</remarks>

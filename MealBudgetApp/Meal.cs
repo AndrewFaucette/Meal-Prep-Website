@@ -4,21 +4,24 @@ using System.Globalization;
 /// <summary>Stores a meal.</summary>
 public class Meal
 {
+    private String name;
     private double cost;
     private String Ingredients;
     private String NutritionalInformation;
 
     /// <summary>Creates a meal with the specified cost.</summary>
-    public Meal(int amount, String ingredients, String nutritionalInformation)
+    public Meal(String name, int amount, String ingredients, String nutritionalInformation)
     {
+        this.name = name;
         this.cost = amount;
         this.Ingredients = ingredients;
         this.NutritionalInformation = nutritionalInformation;
     }
 
     /// <summary>Creates a meal with the specified cost, flooring it to two decimal places.</summary>
-    public Meal(double amount, String ingredients, String nutritionalInformation)
+    public Meal(String name, double amount, String ingredients, String nutritionalInformation)
     {
+        this.name = name;
         this.cost = Math.Floor(amount * 100) / 100;
         this.Ingredients = ingredients;
         this.NutritionalInformation = nutritionalInformation;
@@ -26,6 +29,9 @@ public class Meal
 
     /// <summary>Sets the stored cost without further rounding.</summary>
     public void SetCost(int amount) => this.cost = amount;
+
+    /// <summary>Sets the meal name.</summary>
+    public void SetName(String name) => this.name = name;
 
     /// <summary>Sets the cost after flooring it to two decimal places.</summary>
     public void SetCost(double amount) => this.cost = Math.Floor(amount * 100) / 100;
@@ -38,6 +44,9 @@ public class Meal
 
     /// <summary>Returns the stored cost without further rounding.</summary>
     public double GetCost() => cost;
+
+    /// <summary>Returns the meal name.</summary>
+    public String GetName() => name;
 
     /// <summary>Returns the stored ingredients.</summary>
     public String GetIngredients() => Ingredients;

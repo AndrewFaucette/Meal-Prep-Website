@@ -1,0 +1,11 @@
+{
+  "name": "Chicken Rice Bowl",
+  "cost": 6.5,
+  "ingredients": "Chicken, rice, broccoli",
+  "nutritionalInformation": "550 calories, 40g protein",
+  "description": "An easy meal for a busy school night.",
+  "instructions": "Cook chicken thoroughly. Cook rice. Steam broccoli. Combine and serve.",
+  "author": "Alice",
+  "category": "budget",
+  "time": "25 min"
+}

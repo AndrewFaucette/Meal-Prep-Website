@@ -2,6 +2,8 @@
 # Build output
 bin/
 obj/
+**/bin/
+**/obj/
 
 # Visual Studio
 .vs/
@@ -13,6 +15,9 @@ obj/
 
 # NuGet packages
 *.nupkg
+
+# ASP.NET Core Data Protection keys
+backend/MealPrep.Api/keys/
 
 # OS files
 .DS_Store

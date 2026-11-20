@@ -1,0 +1,13 @@
+{
+  "name": "Week 01",
+  "planComplete": true,
+  "days": [
+    { "name": "Monday", "planned": { "amount": 15 }, "spent": { "amount": 12.5 }, "plannedMeal": { "name": "Chicken Rice Bowl", "cost": 6.5, "ingredients": "Chicken, rice, broccoli", "nutritionalInformation": "550 calories, 40g protein" } },
+    { "name": "Tuesday", "planned": { "amount": 15 }, "spent": { "amount": 10 }, "plannedMeal": { "name": "Spinach Tomato Pasta", "cost": 4.25, "ingredients": "Pasta, tomato sauce, spinach", "nutritionalInformation": "480 calories, 15g protein" } },
+    { "name": "Wednesday", "planned": { "amount": 15 }, "spent": { "amount": 14.25 }, "plannedMeal": { "name": "Black Bean Burrito", "cost": 5.75, "ingredients": "Tortilla, black beans, rice, cheese", "nutritionalInformation": "620 calories, 25g protein" } },
+    { "name": "Thursday", "planned": { "amount": 15 }, "spent": { "amount": 0 }, "plannedMeal": { "name": "Avocado Egg Toast", "cost": 3.5, "ingredients": "Eggs, bread, avocado", "nutritionalInformation": "450 calories, 20g protein" } },
+    { "name": "Friday", "planned": { "amount": 20 }, "spent": { "amount": 0 }, "plannedMeal": { "name": "Beef and Potato Skillet", "cost": 7, "ingredients": "Ground beef, potatoes, carrots", "nutritionalInformation": "650 calories, 35g protein" } },
+    { "name": "Saturday", "planned": { "amount": 20 }, "spent": { "amount": 0 }, "plannedMeal": { "name": "Chicken Garden Salad", "cost": 5, "ingredients": "Chicken, lettuce, tomato, dressing", "nutritionalInformation": "420 calories, 32g protein" } },
+    { "name": "Sunday", "planned": { "amount": 15 }, "spent": { "amount": 0 }, "plannedMeal": { "name": "Lentil Vegetable Soup", "cost": 4.5, "ingredients": "Lentils, onion, carrots, vegetable broth", "nutritionalInformation": "390 calories, 22g protein" } }
+  ]
+}

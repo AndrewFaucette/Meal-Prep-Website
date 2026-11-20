@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipes — CampusBite</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+    :root{--ink:#18231d;--muted:#66736a;--cream:#f7f4ec;--white:#fffdf8;--green:#1f704f;--green-dark:#15533b;--mint:#dff2df;--yellow:#ffd55c;--coral:#ff806b;--line:#dce4d9}
+    *{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--cream);font-family:'DM Sans',sans-serif;line-height:1.5}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}.shell{width:min(1120px,calc(100% - 40px));margin:0 auto}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}.brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.18rem}.brand-mark{display:grid;place-items:center;width:35px;height:35px;border-radius:12px 12px 12px 4px;background:var(--yellow);font-size:1.2rem;transform:rotate(-8deg)}.nav-links{display:flex;align-items:center;gap:25px;color:var(--muted);font-size:.92rem}.nav-links a:hover{color:var(--green)}.nav-cta,.button{border:0;cursor:pointer;color:var(--white);background:var(--green);border-radius:999px;font-weight:700;transition:transform .2s,background .2s}.nav-cta{padding:11px 18px;font-size:.9rem}.nav-cta:hover,.button:hover{color:var(--white);background:var(--green-dark);transform:translateY(-2px)}
+    h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.05;margin:0}h1{max-width:760px;font-size:clamp(3rem,7vw,5.7rem);letter-spacing:-.075em}h1 em{color:var(--green);font-style:normal}h2{font-size:clamp(2rem,4.5vw,3.5rem);letter-spacing:-.06em}.page-hero{padding:68px 0 36px}.eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:7px 12px;color:var(--green-dark);background:var(--mint);border-radius:999px;font-size:.79rem;font-weight:700}.eyebrow span{width:7px;height:7px;border-radius:50%;background:var(--coral)}.lead{max-width:620px;margin:22px 0 0;color:var(--muted);font-size:1.08rem}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.button{display:inline-block;padding:14px 21px}.button.secondary{color:var(--green);background:var(--yellow)}.button.secondary:hover{color:var(--ink);background:#ffe17f}
+    .toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:20px 0 28px}.search{flex:1;max-width:450px;padding:14px 17px;border:1px solid var(--line);border-radius:999px;background:var(--white);color:var(--ink);outline:none}.search:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--mint)}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{padding:9px 13px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:transparent;cursor:pointer;font-size:.82rem}.filter.active,.filter:hover{border-color:var(--green);color:var(--white);background:var(--green)}
+    .recipe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.recipe-card{display:flex;flex-direction:column;min-height:300px;padding:23px;border:1px solid var(--line);border-radius:23px;background:rgba(255,253,248,.72);transition:transform .2s,box-shadow .2s}.recipe-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(31,64,45,.08)}.recipe-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.food-emoji{display:grid;place-items:center;width:53px;height:53px;border-radius:17px;background:var(--yellow);font-size:1.75rem}.recipe-card:nth-child(3n) .food-emoji{background:var(--mint)}.recipe-card:nth-child(2n) .food-emoji{background:#ffdcd5}.heart{border:0;background:transparent;color:var(--coral);font-size:1.25rem;cursor:pointer}.recipe-card h3{margin:19px 0 8px;font-size:1.22rem}.recipe-card p{margin:0;color:var(--muted);font-size:.88rem}.recipe-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}.tag{padding:5px 9px;border-radius:999px;color:var(--green-dark);background:var(--mint);font-size:.71rem;font-weight:700}.tag.budget{background:#fff0bf}.recipe-footer{display:flex;justify-content:space-between;margin-top:auto;padding-top:22px;color:var(--muted);font-size:.78rem}.empty{display:none;padding:45px;text-align:center;border:1px dashed #b7cbbb;border-radius:22px;color:var(--muted)}.empty.show{display:block}
+    .share-section{margin:80px auto 55px;padding:38px;border-radius:28px;background:var(--green);color:var(--white)}.share-copy{max-width:540px}.share-copy p{color:#b9dbc2}.share-form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px;padding:24px;border-radius:20px;background:var(--white);color:var(--ink)}.share-form label{display:grid;gap:6px;color:var(--muted);font-size:.78rem;font-weight:700}.share-form label.full{grid-column:1/-1}.share-form input,.share-form select,.share-form textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:11px;color:var(--ink);background:#fff;resize:vertical}.share-form textarea{min-height:85px}.share-form .button{justify-self:start}.form-message{display:none;grid-column:1/-1;margin:0;color:var(--green);font-size:.86rem;font-weight:700}.form-message.show{display:block}
+    footer{display:flex;justify-content:space-between;padding:0 0 28px;color:var(--muted);font-size:.77rem}@media(max-width:800px){.nav-links a:not(.nav-cta){display:none}.toolbar{align-items:stretch;flex-direction:column}.search{max-width:none}.recipe-grid{grid-template-columns:1fr 1fr}.share-form{grid-template-columns:1fr}.share-form label.full{grid-column:auto}}@media(max-width:520px){.shell{width:min(100% - 28px,1120px)}.recipe-grid{grid-template-columns:1fr}.share-section{padding:26px 20px}footer{gap:20px;flex-direction:column}}
+  </style>
+</head>
+<body>
+<header class="shell">
+    <nav aria-label="Main navigation">
+      <a class="brand" href="sprint.html"><span class="brand-mark">🍴</span> CampusBite</a>
+      <div class="nav-links"><a href="how-it-works.html">How it works</a><a href="features.html">Features</a><a href="recipes.html">Community Recipes</a><a href="get-started.html">Get started</a></div>
+    </nav>
+  </header>  
+  <main>
+    <section class="page-hero shell">
+      <div class="eyebrow"><span></span> shared by students, made for students</div>
+      <h1>What are we <em>eating this week?</em></h1>
+      <p class="lead">Find budget-friendly recipes from your campus community, or share the meal you make when your fridge looks a little empty.</p>
+      <div class="hero-actions"><a class="button secondary" href="#share">Share a recipe →</a><a class="button" href="#browse">Browse recipes</a></div>
+    </section>
+
+    <section class="shell" id="browse">
+      <div class="toolbar"><input class="search" id="search" type="search" placeholder="Search recipes, ingredients, or vibes..." aria-label="Search recipes"><div class="filters" aria-label="Recipe categories"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="quick">Quick</button><button class="filter" data-filter="budget">Budget-friendly</button><button class="filter" data-filter="vegetarian">Vegetarian</button></div></div>
+      <div class="recipe-grid" id="recipeGrid">
+        <article class="recipe-card" data-category="quick budget" data-search="five minute ramen upgrade quick budget noodles"><div class="recipe-top"><span class="food-emoji">🍜</span><button class="heart" aria-label="Save Five-Minute Ramen Upgrade">♡</button></div><h3>Five-Minute Ramen Upgrade</h3><p>Turn instant noodles into a surprisingly good dinner with an egg, greens, and whatever sauce is in the fridge.</p><div class="recipe-meta"><span class="tag">Quick</span><span class="tag budget">~$3 / serving</span></div><div class="recipe-footer"><span>by Maya · Campus kitchen</span><span>10 min</span></div></article>
+        <article class="recipe-card" data-category="budget vegetarian" data-search="crispy chickpea rice bowl budget vegetarian rice chickpeas"><div class="recipe-top"><span class="food-emoji">🥗</span><button class="heart" aria-label="Save Crispy Chickpea Rice Bowl">♡</button></div><h3>Crispy Chickpea Rice Bowl</h3><p>A filling bowl with crunchy chickpeas, rice, greens, and a creamy lemon sauce that makes leftovers exciting.</p><div class="recipe-meta"><span class="tag">Vegetarian</span><span class="tag budget">~$4 / serving</span></div><div class="recipe-footer"><span>by Jordan · North dorms</span><span>25 min</span></div></article>
+        <article class="recipe-card" data-category="quick budget" data-search="peanut butter banana toast quick breakfast budget"><div class="recipe-top"><span class="food-emoji">🍌</span><button class="heart" aria-label="Save Peanut Butter Banana Toast">♡</button></div><h3>Peanut Butter Banana Toast</h3><p>The breakfast that gets you to your 8 a.m. class: toast, peanut butter, banana, and a tiny pinch of cinnamon.</p><div class="recipe-meta"><span class="tag">Quick</span><span class="tag budget">~$2 / serving</span></div><div class="recipe-footer"><span>by Alex · Early riser</span><span>5 min</span></div></article>
+        <article class="recipe-card" data-category="vegetarian budget" data-search="loaded baked potato vegetarian budget dinner potato cheese"><div class="recipe-top"><span class="food-emoji">🥔</span><button class="heart" aria-label="Save Loaded Baked Potato">♡</button></div><h3>Loaded Baked Potato</h3><p>Top a microwave potato with beans, cheese, salsa, and anything else that needs using up.</p><div class="recipe-meta"><span class="tag">Vegetarian</span><span class="tag budget">~$3 / serving</span></div><div class="recipe-footer"><span>by Sam · Leftover legend</span><span>12 min</span></div></article>
+        <article class="recipe-card" data-category="quick" data-search="three ingredient pesto pasta quick dinner pasta pesto"><div class="recipe-top"><span class="food-emoji">🍝</span><button class="heart" aria-label="Save Three-Ingredient Pesto Pasta">♡</button></div><h3>Three-Ingredient Pesto Pasta</h3><p>Pasta, pesto, and frozen peas come together for a low-effort dinner that tastes like you tried.</p><div class="recipe-meta"><span class="tag">Quick</span><span class="tag budget">~$4 / serving</span></div><div class="recipe-footer"><span>by Riley · Study break chef</span><span>15 min</span></div></article>
+        <article class="recipe-card" data-category="budget" data-search="freezer quesadillas budget lunch cheese tortilla beans"><div class="recipe-top"><span class="food-emoji">🫓</span><button class="heart" aria-label="Save Freezer Quesadillas">♡</button></div><h3>Freezer Quesadillas</h3><p>Make a batch with tortillas, cheese, and beans, then freeze them for the nights you absolutely cannot cook.</p><div class="recipe-meta"><span class="tag budget">~$2 / serving</span><span class="tag">Freezer-friendly</span></div><div class="recipe-footer"><span>by Chris · Meal prep crew</span><span>20 min</span></div></article>
+      </div>
+      <p class="empty" id="empty">No recipes found yet. Try a different search, or be the first to share one!</p>
+    </section>
+
+    <section class="share-section shell" id="share">
+      <div class="share-copy"><p class="eyebrow">your turn, chef</p><h2>Share the recipe that saves your week.</h2><p>It can be a dorm-room classic, a five-minute snack, or the thing you make when you have exactly $6 left. Your community will thank you.</p></div>
+      <form class="share-form" id="shareForm">
+        <label>RECIPE NAME<input id="recipeName" type="text" placeholder="Microwave mug pizza" required></label>
+        <label>YOUR NAME<input id="recipeAuthor" type="text" placeholder="Your first name" required></label>
+        <label>CATEGORY<select id="recipeCategory" required><option value="">Choose one</option><option value="quick">Quick</option><option value="budget">Budget-friendly</option><option value="vegetarian">Vegetarian</option></select></label>
+        <label>TIME<input id="recipeTime" type="text" placeholder="15 min" required></label>
+        <label class="full">TELL US ABOUT IT<textarea id="recipeDescription" placeholder="What makes this recipe good for college life?" required></textarea></label>
+        <button class="button secondary" type="submit">Post recipe →</button>
+        <p class="form-message" id="formMessage">Posted! Your recipe is now on the community board ✨</p>
+      </form>
+    </section>
+  </main>
+  <footer class="shell"><span>© 2026 CampusBite</span><span>Built for campus life · Made with good intentions</span></footer>
+  <script>
+    const search = document.getElementById('search');
+    const cards = [...document.querySelectorAll('.recipe-card')];
+    const filters = [...document.querySelectorAll('.filter')];
+    const empty = document.getElementById('empty');
+    let activeFilter = 'all';
+    function updateRecipes() {
+      const query = search.value.toLowerCase().trim();
+      let visible = 0;
+      cards.forEach(card => {
+        const matchesSearch = card.dataset.search.includes(query);
+        const matchesFilter = activeFilter === 'all' || card.dataset.category.includes(activeFilter);
+        const show = matchesSearch && matchesFilter;
+        card.style.display = show ? 'flex' : 'none';
+        if (show) visible++;
+      });
+      empty.classList.toggle('show', visible === 0);
+    }
+    search.addEventListener('input', updateRecipes);
+    filters.forEach(filter => filter.addEventListener('click', () => {
+      filters.forEach(item => item.classList.remove('active'));
+      filter.classList.add('active');
+      activeFilter = filter.dataset.filter;
+      updateRecipes();
+    }));
+    document.querySelectorAll('.heart').forEach(button => button.addEventListener('click', () => {
+      button.textContent = button.textContent === '♡' ? '♥' : '♡';
+    }));
+    document.getElementById('shareForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const name = document.getElementById('recipeName').value.trim();
+      const author = document.getElementById('recipeAuthor').value.trim();
+      const category = document.getElementById('recipeCategory').value;
+      const time = document.getElementById('recipeTime').value.trim();
+      const description = document.getElementById('recipeDescription').value.trim();
+      const card = document.createElement('article');
+      card.className = 'recipe-card';
+      card.dataset.category = category;
+      card.dataset.search = (name + ' ' + description + ' ' + category).toLowerCase();
+      card.innerHTML = '<div class="recipe-top"><span class="food-emoji">🍽️</span><button class="heart" aria-label="Save ' + escapeHTML(name) + '">♡</button></div><h3>' + escapeHTML(name) + '</h3><p>' + escapeHTML(description) + '</p><div class="recipe-meta"><span class="tag">' + escapeHTML(category) + '</span></div><div class="recipe-footer"><span>by ' + escapeHTML(author) + ' · Community</span><span>' + escapeHTML(time) + '</span></div>';
+      document.getElementById('recipeGrid').prepend(card);
+      card.querySelector('.heart').addEventListener('click', event => { event.currentTarget.textContent = event.currentTarget.textContent === '♡' ? '♥' : '♡'; });
+      event.target.reset();
+      document.getElementById('formMessage').classList.add('show');
+      updateRecipes();
+    });
+    function escapeHTML(value) { return value.replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character])); }
+  </script>
+</body>
+</html>

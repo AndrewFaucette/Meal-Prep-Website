@@ -1,0 +1,209 @@
+SERVER REVIEW — November 9, 2026
+
+Verdict
+-------
+Yes: this is a real Node.js/Express server with MongoDB CRUD and JSON HTTP
+endpoints usable by C#. It is a local development starter, not a finished
+multi-user backend. The original E: project has not been changed. This folder
+is a corrected copy. Keep it separate until you have tested and compared it.
+
+What already works
+------------------
+server.js opens one MongoClient, pings MongoDB, creates indexes, then listens
+on 127.0.0.1. Reusing MongoClient reuses the driver's connection pool.
+app.js provides POST, list GET, single GET, PUT, PATCH, DELETE on all of:
+  /api/users
+  /api/weeks
+  /api/recipes
+Static HTML is served from public/. GET /api/health pings the database.
+Validation rejects unknown fields, invalid IDs, invalid money, malformed weeks,
+and MongoDB operators. Passwords are salted/scrypt-hashed and excluded from
+user responses. Database failures return a generic JSON error.
+
+PUT replaces all editable fields; PATCH changes supplied top-level fields.
+For example PATCH {"cost":7.75} changes only cost. PATCH of days replaces all
+seven days. This is the HTTP equivalent of choosing between replacing a row's
+values and updating selected columns. MongoDB calls rows "documents" and
+tables "collections"; this server uses MongoDB, not MySQL or SQLite.
+
+Findings and corrected changes
+------------------------------
+1. app.js: loopback binding did not validate Host or browser Origin. A hostile
+   website could target the local service; DNS rebinding can make an attacker
+   hostname resolve to localhost. Added an allowlist of loopback Host names,
+   exact same-origin browser checking, and rejection of cross-site browser
+   requests. These checks run before JSON parsing and database routes.
+   Native HttpClient normally sends no Origin and remains supported. Missing
+   Origin is intentionally allowed, so this does NOT authenticate a caller.
+
+2. app.js: text/plain requests were skipped by express.json(), then failed as
+   confusing body-validation errors. Unsupported charsets reached a generic
+   500 response. Writes now explicitly require application/json and return 415
+   for unsupported formats. Existing JSON text fields accept C# text normally:
+     {"instructions":"Processed by C#"}
+   Raw text and arbitrary result fields are not supported; there is no
+   /api/results endpoint. Use the existing schemas, or design a results schema
+   if you later need a different kind of worker output.
+
+3. app.js: added no-store to API responses to discourage caching personal data,
+   plus nosniff and same-origin referrer headers. No permissive CORS was added.
+
+4. server.js: startup failure cleanup now closes a listening server as well as
+   MongoClient. This avoids leaving HTTP active after partial startup failure.
+
+5. app.test.js: added hostile Host/Origin/Fetch-Site, same-origin, MIME type,
+   unsupported charset and oversized-body checks. Shared test database code
+   moved into testing/test-database.js; it remains a substitute, not MongoDB.
+   package.json targets app.test.js so support files aren't discovered as tests.
+
+6. examples/InteropClient: added a standalone runnable C# example. It checks
+   full recipe CRUD, the paginated list wrapper, processing a fetched cost,
+   sending JSON containing text, and reading that update back. It cleans up
+   only its own recipe. No new runtime dependencies were added.
+
+Important remaining limits
+--------------------------
+- HIGH before shared/public use: there is no authentication (proof of who is
+  calling) or authorization (which records they may access). Any local client
+  can list emails, reset passwords, change data or delete users. userId is only
+  a filter, not ownership enforcement. Browser safeguards and password hashing
+  do not fix this. Retain local-only binding and use test data. A shared service
+  needs login, ownership enforcement, HTTPS, request throttling and suitable
+  account/password-reset rules. This review keeps the existing local scope.
+- Existing plaintext passwords in old database records are hidden on output,
+  but remain stored until changed or removed. Password PATCH removes the old
+  password field. Samples are demo data; never use real credentials there.
+- User references are not checked and deletes do not cascade. Decide whether
+  to reject orphan references or preserve historical records before production.
+- Unique indexes do not migrate old mixed-case username/email values or old
+  userName fields. Legacy duplicate data may stop startup. Use a fresh test
+  database or deliberately clean/migrate old data; do not delete records blindly.
+- GET responses for weeks/recipes may contain old database fields. Input
+  validation does not sanitize existing imported documents. Inventory old data
+  before exposing it; use explicit output schemas if it contains private fields.
+- Concurrent GET/modify/PATCH operations can overwrite each other's changes.
+  Add version checking if multiple clients edit the same week.
+- JavaScript numbers and the original C# double-based Budget class are not exact
+  currency storage. Integer cents or decimal-aware storage is a future change.
+- public/recipes.html's form only inserts a card into the DOM (the current
+  browser page). It does not fetch or persist recipes, despite saying "Posted".
+  Other website forms are not wired to the API either. HTTP endpoints alone
+  do not connect the frontend. This review preserves those pages.
+- Existing MealBudgetApp runs a local console menu with no HttpClient calls.
+  Its private fields/getter methods won't automatically map to this JSON.
+  Use DTO public properties and map them to domain classes. MongoDB _id is a
+  string, unlike the existing integer user ID. The MySqlConnector reference
+  in that project is unrelated to this MongoDB server.
+
+Related C# calculation bug (original file left unchanged)
+--------------------------------------------------------
+MealBudgetApp/Week.cs SetSpentTotal() adds each day's spending to planned,
+never resets spent and returns a zero spending total through GetSepntTotal().
+Replace that method body before trusting its results:
+
+    public void SetSpentTotal()
+    {
+        spent.SetAmount(0);
+        foreach (Day day in days)
+            spent.Add(day.GetSpent());
+    }
+
+This resets then recalculates spending, so repeated reads don't accumulate it.
+The misspelled GetSepntTotal name can remain to preserve existing callers.
+Week.Status() also compares formatted zero "0.00" with Budget.StringFormat(),
+which returns "0.0" for zero; compare numeric values when defining completion
+rules. Budget's Math.Floor(double * 100) can also round a value down a cent due
+to binary floating-point. The new interoperability demo uses decimal instead
+of those existing calculations, and does not silently claim to fix the old app.
+
+Run with real MongoDB
+--------------------
+Prerequisites: Node.js 24+; .NET 10 SDK for the included C# project; a disposable
+MongoDB development database. Never point smoke tests at production data.
+Open PowerShell in THIS reviewed-server folder (or extract the ZIP first):
+
+    npm.cmd ci
+    Copy-Item .env.example .env
+
+Edit .env to supply MONGODB_URI and MONGODB_DB. It is local server configuration,
+ignored by Git; do not put it under public/. Atlas needs a database user and an
+IP access entry for your computer. A local MongoDB URI also works, for example
+mongodb://127.0.0.1:27017 with MONGODB_DB=mealPrepReview.
+
+    npm.cmd test
+    npm.cmd start
+
+The server waits for requests until Ctrl+C. Success prints:
+Connected to MongoDB. Server ready at http://127.0.0.1:3000
+127.0.0.1 means your own machine; 3000 is this process's HTTP port.
+Node starts only after the database ping and indexes succeed.
+
+In another PowerShell window in this folder:
+
+    Invoke-RestMethod http://127.0.0.1:3000/api/health
+    dotnet run --project .\examples\InteropClient -- http://127.0.0.1:3000
+
+The client should print POST, GET, LIST, PATCH + GET ($7.75), PUT, DELETE 204,
+GET 404 and "C# / Node HTTP and JSON checks passed." It returns nonzero on
+failed checks. This is a real HTTP test; no database credentials enter C#.
+
+To check persistence separately, while Node is running:
+
+    $baseUrl = 'http://127.0.0.1:3000'
+    $recipe = Invoke-RestMethod "$baseUrl/api/recipes" -Method Post -ContentType 'application/json' -Body (Get-Content .\examples\recipe.json -Raw)
+    $recipeId = $recipe._id
+
+Stop/restart Node, keeping this second window open, then:
+
+    Invoke-RestMethod "$baseUrl/api/recipes/$recipeId"
+    Invoke-RestMethod "$baseUrl/api/recipes/$recipeId" -Method Delete
+
+The GET should still return the recipe after restart. README.md has additional
+user/week CRUD commands. List responses wrap rows in {data,page,limit}; a single
+GET returns a document directly; DELETE 204 has no JSON body.
+
+C# code concepts
+----------------
+HttpClient sends requests. PostAsJsonAsync and PatchAsJsonAsync convert C#
+objects to JSON and set the content type. ReadFromJsonAsync<T> converts a JSON
+response to a DTO (a small transport class with public properties). The
+[JsonPropertyName("_id")] attribute maps MongoDB's _id field to C# Id. The
+web defaults match camelCase JSON names to PascalCase properties. async/await
+waits for network work without blocking a thread for the whole operation.
+Check() reports HTTP errors before attempting success-body deserialization.
+The demo reuses one HttpClient for its full lifetime.
+
+Native C# HttpClient does not need browser CORS permission. Serve HTML from
+this same Node server and use relative URLs such as fetch('/api/recipes').
+Opening HTML as file:// or on another browser origin is intentionally blocked
+by these local safeguards. This server does not push to or launch C#; C# must
+make requests. A remote C# machine cannot reach a loopback-only server.
+
+Verified in this review
+-----------------------
+- Node v24.22.1: npm ci completed; no dependency version changes.
+- npm test: six test results passed (one parent plus five subtests).
+- node --check: app.js, server.js, validation.js passed.
+- .NET 10: client built with zero warnings/errors, then ran successfully against
+  the real Express HTTP routes backed by testing/test-database.js.
+- npm audit --omit=dev reported zero known vulnerabilities at review time.
+- No real MongoDB connection, index behavior or restart persistence was tested:
+  the source server has only placeholder connection configuration, and mongod
+  was not installed. The commands above are the remaining database checks.
+- The test database does not reproduce all MongoDB behavior. Passing tests do
+  not prove production access control, database migration safety or concurrency.
+
+Optional transport-only check without MongoDB
+--------------------------------------------
+    node .\testing\interop-fixture.js
+
+It prints a temporary localhost address. Run the C# command above with that
+address in a second window. Ctrl+C stops it. This fixture loses all data when
+stopped and is strictly for tests, never a replacement for MongoDB.
+
+Official references checked
+---------------------------
+https://expressjs.com/en/5x/api/
+https://expressjs.com/advanced/best-practice-security/
+https://www.mongodb.com/docs/drivers/node/current/connect/connection-options/connection-pools/
+https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/httpclient-extensions

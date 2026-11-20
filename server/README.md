@@ -1,5 +1,7 @@
 # Meal Prep server: Express + MongoDB Atlas
 
+Read `REVIEW.txt` for this review's findings, changes, verification limits, and the runnable C# client. This folder is a separate corrected copy of the inspected server.
+
 This is a local development starter for your HTML website and C# console application. It provides create, list, read, replace, update, and delete operations for `users`, `weeks`, and `recipes`. Your original project files have not been edited.
 
 ## Run it
@@ -45,6 +47,8 @@ All write requests must use `Content-Type: application/json` and send one object
 List pagination: `/api/weeks?page=1&limit=20` (limit up to 100). Weeks and recipes also support `/api/weeks?userId=YOUR_USER_ID`.
 
 Common errors are JSON objects such as `{ "error": "name is required." }`: 400 for invalid input or ID, 404 for missing documents, 409 for duplicate usernames/emails, 413 for oversized JSON, and 500 for unexpected server/database failures.
+
+The reviewed copy also returns 415 for unsupported write content types/encodings and 403 for rejected Host/browser-origin headers. Use `http://127.0.0.1:3000` consistently. It allows same-origin browser requests and native C# clients, but rejects cross-origin browser requests. This is a local development safeguard, not login or per-user authorization. API responses use `Cache-Control: no-store`.
 
 ## Try the complete CRUD flow
 

@@ -48,6 +48,26 @@ function present(resource, document) {
 export function createApp(db) {
   const app = express();
   app.disable('x-powered-by');
+  // Loopback binding alone does not stop a hostile website from targeting a
+  // local server. Check Host (DNS rebinding) and browser origin before parsing.
+  app.use((req, res, next) => {
+    res.set('X-Content-Type-Options', 'nosniff');
+    res.set('Referrer-Policy', 'same-origin');
+    const host = req.get('host') ?? '';
+    if (!/^(127\.0\.0\.1|localhost|\[::1\])(?::\d{1,5})?$/i.test(host)) {
+      return next(new HttpError(403, 'Only localhost requests are allowed.'));
+    }
+    const origin = req.get('origin');
+    if ((origin && origin !== `http://${host}`) || req.get('sec-fetch-site') === 'cross-site') {
+      return next(new HttpError(403, 'Cross-origin requests are not allowed.'));
+    }
+    if (req.path.startsWith('/api/')) res.set('Cache-Control', 'no-store');
+    if (req.path.startsWith('/api/') && ['POST', 'PUT', 'PATCH'].includes(req.method)
+        && !req.is('application/json')) {
+      return next(new HttpError(415, 'Use Content-Type: application/json. Send text inside a JSON field.'));
+    }
+    next();
+  });
   app.use(express.json({ limit: '256kb' }));
 
   app.get('/api/health', async (req, res) => {
@@ -128,6 +148,9 @@ export function createApp(db) {
     if (error.code === 11000) return res.status(409).json({ error: 'That username or email is already in use.' });
     if (error.type === 'entity.parse.failed') return res.status(400).json({ error: 'Request body contains invalid JSON.' });
     if (error.type === 'entity.too.large') return res.status(413).json({ error: 'Request body is too large.' });
+    if (['encoding.unsupported', 'charset.unsupported'].includes(error.type)) {
+      return res.status(415).json({ error: 'Unsupported request encoding or charset.' });
+    }
     if (error instanceof HttpError) return res.status(error.status).json({ error: error.message });
     // Avoid logging database connection strings, passwords, or raw request bodies.
     console.error('Request failed:', error.name ?? 'Error');

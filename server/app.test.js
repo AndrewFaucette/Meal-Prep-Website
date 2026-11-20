@@ -1,67 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { request as httpRequest } from 'node:http';
 import { ObjectId } from 'mongodb';
 import { createApp } from './app.js';
 
-// A deliberately small test double. Actual Atlas behavior needs the README smoke check.
-function testDatabase() {
-  const collections = new Map();
-  return {
-    async command() { return { ok: 1 }; },
-    collection(name) {
-      if (collections.has(name)) return collections.get(name);
-      const rows = new Map();
-      const key = id => id.toString();
-      function duplicate(document) {
-        if (name !== 'users') return;
-        for (const row of rows.values()) {
-          if (key(row._id) !== key(document._id) && (row.username === document.username || row.email === document.email)) {
-            const error = new Error('Duplicate');
-            error.code = 11000;
-            throw error;
-          }
-        }
-      }
-      const collection = {
-        async insertOne(document) {
-          document._id ??= new ObjectId();
-          duplicate(document);
-          rows.set(key(document._id), { ...document });
-          return { insertedId: document._id };
-        },
-        async findOne({ _id }) { return rows.get(key(_id)) ?? null; },
-        find(filter) {
-          let data = [...rows.values()].filter(row => Object.entries(filter).every(([field, value]) => row[field] === value));
-          return {
-            sort() { data.sort((a, b) => key(a._id).localeCompare(key(b._id))); return this; },
-            skip(count) { data = data.slice(count); return this; },
-            limit(count) { data = data.slice(0, count); return this; },
-            async toArray() { return data; }
-          };
-        },
-        async replaceOne({ _id }, document) {
-          if (!rows.has(key(_id))) return { matchedCount: 0 };
-          duplicate({ ...document, _id });
-          rows.set(key(_id), { ...document, _id });
-          return { matchedCount: 1 };
-        },
-        async findOneAndUpdate({ _id }, update) {
-          const current = rows.get(key(_id));
-          if (!current) return null;
-          const result = { ...current, ...update.$set };
-          for (const field of Object.keys(update.$unset ?? {})) delete result[field];
-          duplicate(result);
-          rows.set(key(_id), result);
-          return result;
-        },
-        async deleteOne({ _id }) { return { deletedCount: rows.delete(key(_id)) ? 1 : 0 }; }
-      };
-      collections.set(name, collection);
-      return collection;
-    }
-  };
-}
+import { testDatabase } from './testing/test-database.js';
 
 test('HTTP CRUD, validation, and password protection', async t => {
   const db = testDatabase();
@@ -163,5 +107,42 @@ test('HTTP CRUD, validation, and password protection', async t => {
     assert.equal(patched.body.days.length, 7);
     assert.equal((await request('GET', '/api/health')).body.status, 'ok');
     assert.equal((await request('GET', '/api/missing')).status, 404);
+  });
+
+  await t.test('local browser protections and request format errors', async () => {
+    for (const headers of [
+      { Origin: 'https://attacker.example' },
+      { Origin: 'null' },
+      { Host: 'attacker.example' },
+      { 'Sec-Fetch-Site': 'cross-site' }
+    ]) {
+      // Use raw HTTP so fetch cannot replace Host / browser metadata headers.
+      const response = await new Promise((resolve, reject) => {
+        const request = httpRequest(`${base}/api/recipes`, { headers }, res => {
+          let body = '';
+          res.setEncoding('utf8');
+          res.on('data', chunk => { body += chunk; });
+          res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(body) }));
+        });
+        request.on('error', reject);
+        request.end();
+      });
+      assert.equal(response.status, 403, JSON.stringify(headers));
+      assert.equal(typeof response.body.error, 'string');
+    }
+    const sameOrigin = await fetch(`${base}/api/recipes`, { headers: { Origin: base } });
+    assert.equal(sameOrigin.status, 200);
+    assert.equal(sameOrigin.headers.get('cache-control'), 'no-store');
+    for (const contentType of ['text/plain', 'application/x-www-form-urlencoded', 'application/json; charset=iso-8859-1']) {
+      const response = await fetch(`${base}/api/recipes`, {
+        method: 'POST', headers: { 'Content-Type': contentType }, body: '{}'
+      });
+      assert.equal(response.status, 415);
+    }
+    const large = await fetch(`${base}/api/recipes`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'x'.repeat(270000) })
+    });
+    assert.equal(large.status, 413);
   });
 });

@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node --env-file=.env server.js",
     "dev": "node --watch --env-file=.env server.js",
-    "test": "node --test --test-isolation=none"
+    "test": "node --test --test-isolation=none app.test.js"
   },
   "dependencies": {
     "express": "5.3.0",

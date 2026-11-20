@@ -43,6 +43,7 @@ try {
   process.once('SIGTERM', () => { stop().catch(() => process.exit(1)); });
 } catch (error) {
   console.error('Startup failed. Check Atlas credentials, network access, and duplicate user records. Error type:', error.name);
-  await client.close();
+  // A failure after listen() must not leave a server accepting requests.
+  await stop();
   process.exitCode = 1;
 }

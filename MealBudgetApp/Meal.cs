@@ -1,5 +1,8 @@
 using System;
 using System.Globalization;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 /// <summary>Stores a meal.</summary>
 public class Meal
@@ -98,6 +101,56 @@ public class Meal
 
     /// <summary>Returns the stored time.</summary>
     public String GetTime() => Time;
+
+    /// <summary>Reads recipe data from a JSON file and assigns it to this meal.</summary>
+    public void ReadData(string filePath)
+    {
+        string json = File.ReadAllText(filePath);
+        RecipeData? recipe = JsonSerializer.Deserialize<RecipeData>(json);
+
+        if (recipe is null || string.IsNullOrWhiteSpace(recipe.Name))
+            throw new InvalidDataException("The JSON file does not contain a valid recipe.");
+
+        name = recipe.Name;
+        SetCost(recipe.Cost);
+        Ingredients = recipe.Ingredients;
+        NutritionalInformation = recipe.NutritionalInformation;
+        Description = recipe.Description;
+        Instructions = recipe.Instructions;
+        Author = recipe.Author;
+        Category = recipe.Category;
+        Time = recipe.Time;
+    }
+
+    private sealed class RecipeData
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; } = "";
+
+        [JsonPropertyName("cost")]
+        public double Cost { get; set; }
+
+        [JsonPropertyName("ingredients")]
+        public string Ingredients { get; set; } = "";
+
+        [JsonPropertyName("nutritionalInformation")]
+        public string NutritionalInformation { get; set; } = "";
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; } = "";
+
+        [JsonPropertyName("instructions")]
+        public string Instructions { get; set; } = "";
+
+        [JsonPropertyName("author")]
+        public string Author { get; set; } = "";
+
+        [JsonPropertyName("category")]
+        public string Category { get; set; } = "";
+
+        [JsonPropertyName("time")]
+        public string Time { get; set; } = "";
+    }
 
     /// <summary>Returns culture-independent text, retaining Java's decimal suffix for whole values.</summary>
     /// <remarks>This is not fixed two-decimal currency formatting. Scientific notation can differ from Java.</remarks>
